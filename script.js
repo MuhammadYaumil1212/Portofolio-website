@@ -1,46 +1,61 @@
 const projects = [
-    {
-        title: "Movie App",
-        description: "Aplikasi streaming movie berbasis Flutter dengan autentikasi Supabase dan Clean Architecture.",
-        techStack: ["Flutter", "Supabase", "REST API", "Firebase"],
-        architecture: ["Clean Architecture", "MVVM"]
-    },
-    {
-        title: "Sport Booking App",
-        description: "Aplikasi booking lapangan olahraga dengan sistem pembayaran dan manajemen contest.",
-        techStack: ["Flutter", "Firebase", "Cloud Firestore"],
-        architecture: ["Feature-based Architecture"]
-    },
-    {
-        title: "AI Object Detection App",
-        description: "Aplikasi mobile dengan integrasi YOLO untuk real-time object detection.",
-        techStack: ["Flutter", "YOLOv8", "Python", "TensorFlow"],
-        architecture: ["Modular Architecture"]
-    }
+  {
+    title: "Movie Streaming App",
+    image: "https://source.unsplash.com/600x400/?mobile,app",
+    description: "Streaming movie app with Supabase authentication and Clean Architecture.",
+    tech: ["Flutter", "Supabase", "REST API"],
+    architecture: ["Clean Architecture", "MVVM"]
+  },
+  {
+    title: "Sport Booking App",
+    image: "https://source.unsplash.com/600x400/?sports,app",
+    description: "Booking lapangan olahraga dengan payment gateway integration.",
+    tech: ["Flutter", "Firebase", "Cloud Firestore"],
+    architecture: ["Feature-based Architecture"]
+  },
+  {
+    title: "AI Object Detection App",
+    image: "https://source.unsplash.com/600x400/?ai,mobile",
+    description: "Real-time object detection app using YOLO model integration.",
+    tech: ["Flutter", "YOLOv8", "TensorFlow"],
+    architecture: ["Modular Architecture"]
+  }
 ];
 
 const container = document.getElementById("projectContainer");
 
 projects.forEach(project => {
-    const card = document.createElement("div");
-    card.classList.add("project-card");
+  const card = document.createElement("div");
+  card.classList.add("project-card");
 
-    card.innerHTML = `
-        <h3>${project.title}</h3>
-        <p>${project.description}</p>
+  card.innerHTML = `
+    <img src="${project.image}" alt="${project.title}">
+    <h3>${project.title}</h3>
+    <p>${project.description}</p>
+    <strong>Tech Stack:</strong><br>
+    ${project.tech.map(t => `<span class="badge">${t}</span>`).join("")}
+    <br><br>
+    <strong>Architecture:</strong><br>
+    ${project.architecture.map(a => `<span class="badge">${a}</span>`).join("")}
+  `;
 
-        <strong>Tech Stack:</strong>
-        <div class="tech-stack">
-            ${project.techStack.map(tech => `<span>${tech}</span>`).join("")}
-        </div>
+  container.appendChild(card);
+});
 
-        <br>
+/* Scroll Animation */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+}, { threshold: 0.2 });
 
-        <strong>Architecture:</strong>
-        <div class="architecture">
-            ${project.architecture.map(arch => `<span>${arch}</span>`).join("")}
-        </div>
-    `;
+document.querySelectorAll(".project-card").forEach(card => {
+  observer.observe(card);
+});
 
-    container.appendChild(card);
+/* Dark/Light Toggle */
+document.getElementById("themeToggle").addEventListener("click", () => {
+  document.body.classList.toggle("light");
 });
